@@ -1,12 +1,18 @@
 import React from 'react';
-import './App.css';
+import styled from 'styled-components';
+import Signup from './components/Signup';
 
 function App() {
   return (
-    <div className="App">
-     p2p
-    </div>
+    <StyledMainApp>
+      <Signup/>
+    </StyledMainApp>
   );
 }
+
+const StyledMainApp=styled.div`
+*{
+}
+`
 
 export default App;
