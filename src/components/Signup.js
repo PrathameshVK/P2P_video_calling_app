@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useRef,useState}  from 'react';
 import styled from 'styled-components';
 import {createTheme, makeStyles, ThemeProvider} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import {useAuth} from '../context/AuthContext';
+import { Link, useHistory } from 'react-router-dom';
 
 const theme=createTheme({
     palette:{
@@ -12,9 +14,7 @@ const theme=createTheme({
         secondary:{
             main:'#008037'
         }
-    },
-
-    width: '25ch'
+    }
 })
 
 const useStyles=makeStyles({
@@ -33,36 +33,55 @@ const useStyles=makeStyles({
     },
     cssLabel: {
         color : '#008037'
-      },
-    
+      }, 
     cssOutlinedInput: {
         '&$cssFocused $notchedOutline': {
-          borderColor: '#008037'
+          borderColor: '#008037',
         }
-        
     },
-    
     cssFocused: {
         borderWidth: '1px',
-        borderColor:  '#008037'
+        borderColor:  '#008037',
     },
-    
     root: {
         "&:hover:not($disabled):not($focused):not($error) $notchedOutline": {
-          borderColor: '#008037'
+          borderColor: '#008037',
         }
-      },
-
+    },
+    input: {
+        color: '#008037'
+    },
     notchedOutline: {
         borderWidth: '1px',
         borderColor:  '#008037',
         '&:hover':{
             borderColor: '#008037'
         }
-    },
+    }
 })
 
 export default function Signup() {
+
+    const emailRef=useRef();
+    const passwordRef=useRef();
+    const {signup}=useAuth();
+    const [error, setError]=useState('');
+    const [loading, setLoading]=useState(false);
+    const history=useHistory();
+ 
+    async function handleSignup(e){
+        e.preventDefault();
+        try {  
+            setError('');
+            setLoading(true);
+            await signup(emailRef.current.value,passwordRef.current.value);
+            history.push('/');
+        } catch {
+            setError("Could not sign in !");
+        }
+        setLoading(false);
+    }
+
     const classes=useStyles();
     return (
         <>
@@ -75,7 +94,15 @@ export default function Signup() {
                     </div>
                     <div className="signup-form">
                         <h2>Sign in</h2>
+                        {
+                            error &&
+                            <Error>
+                                {error}
+                            </Error>
+                        }
+                        <form onSubmit={handleSignup}>
                         <TextField
+                            autoComplete="off"
                             className={classes.field}
                             fullWidth id="outlined-basic"
                             label="Email"
@@ -91,9 +118,14 @@ export default function Signup() {
                                   root: classes.root,
                                   focused: classes.cssFocused,
                                   notchedOutline: classes.notchedOutline,
-                                }
-                            }}/><br/><br/>
+                                },
+                                className: classes.input
+                            }}
+                            type="email"
+                            inputRef={emailRef}
+                        /><br/><br/>
                         <TextField
+                            autoComplete="off"
                             className={classes.field}
                             color="secondary"
                             fullWidth id="outlined-basic"
@@ -110,11 +142,22 @@ export default function Signup() {
                                   root: classes.root,
                                   focused: classes.cssFocused,
                                   notchedOutline: classes.notchedOutline,
-                                }
+                                },
+                                className: classes.input
                             }}
+                            type="password"
+                            inputRef={passwordRef}
                         /><br/><br/>
-                        <Button className={classes.btn} variant="contained">Sign in</Button><br/><br/>
-                        <p>Already have an account ? <a>Log in</a></p>
+                        <Button
+                            disabled={loading}
+                            className={classes.btn}
+                            variant="contained"
+                            type="submit"
+                        >
+                            Sign in
+                        </Button><br/><br/>
+                        </form>
+                        <p>Already have an account ? <Link className="link" to="/login">Log in</Link></p>
                     </div>
                 </StyledMainBody>
             </ThemeProvider>
@@ -157,12 +200,19 @@ const StyledMainBody=styled.div`
         }
         p{
             font-size: 1.2rem;
-            a{
+            .link{
                 color: #CC08FD;
+                text-decoration: none;
                 &:hover{
                     cursor: pointer;
                 }
             }
         }
     }
+`
+const Error=styled.div`
+    color: #d63f3f;
+    width: inherit;
+    font-size: 1.4rem;
+    margin-bottom: 1vh;
 `

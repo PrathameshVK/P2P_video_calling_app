@@ -1,9 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 import logo from '../img/logo.png';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
+import {useAuth} from '../context/AuthContext';
 
 function Navbar() {
+    const {currentUser, logout}=useAuth();
+
+    const history=useHistory();
+
+    async function handleLogout(){
+        try {
+           await logout();
+           history.push('/login');
+        } catch {
+            
+        }
+    }
+
     return (
         <div>
             <StyledHeader>
@@ -20,6 +34,9 @@ function Navbar() {
                     <li>
                         <Link to="/projects">About Us</Link>
                     </li>
+                    <li>
+                        <a onClick={handleLogout}>{currentUser && `Log out`}</a>
+                    </li>
                 </ul>
             </StyledNavBar>
         </StyledHeader>
@@ -31,6 +48,7 @@ const StyledHeader=styled.div`
   display: flex;
   width: 100%;
   min-height: 10vh;
+  background-color: black;
   position: fixed;
   top: 0;
   justify-content: space-between;
