@@ -1,21 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
+import { StyledDashBoard } from '../StyledComponents/StyledDashboard';
+import { theme } from '../StyledComponents/Theme';
 import Button from '@material-ui/core/Button';
-import {createTheme, makeStyles, ThemeProvider} from '@material-ui/core';
+import { makeStyles, ThemeProvider } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import mainbg from '../img/mainbg.png';
-import { useAuth } from '../context/AuthContext';
-
-const theme=createTheme({
-    palette:{
-        primary:{
-            main: '#008037'
-        },
-        secondary:{
-            main:'#008037'
-        }
-    }
-})
 
 const useStyles=makeStyles({  
     field:{
@@ -105,37 +94,3 @@ export default function Dashboard() {
         </StyledDashBoard>
     )
 }
-
-const StyledDashBoard=styled.div`
-    color: wheat;
-    padding-top: 15vh;
-    display: flex;
-    min-height: 76vh;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5rem 10rem;
-    overflow: hidden;
-    .main-intro{
-        width: 50%;
-        font-size: 2.5rem;
-        font-weight: 600;
-        .personal{
-            color: #CC08FD;
-        }
-        p{
-            font-size: 2rem;
-            font-weight: 400;
-            span{
-                color: #008037;
-            }
-        }
-        .options{
-            display: flex;
-            align-items: center;
-        }
-    }
-    img{
-        width: 40vw;
-        height: auto;
-    }
-`

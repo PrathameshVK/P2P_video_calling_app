@@ -1,64 +1,13 @@
-import React, {useRef,useState}  from 'react';
-import styled from 'styled-components';
-import {createTheme, makeStyles, ThemeProvider} from '@material-ui/core';
+import React, { useRef, useState }  from 'react';
+import { useStyles } from '../StyledComponents/CustomStyles';
+import { theme } from '../StyledComponents/Theme';
+import { ThemeProvider} from '@material-ui/core';
+import { StyledMainBody } from '../StyledComponents/StyledMainBody';
+import { Error } from '../StyledComponents/Error';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import {useAuth} from '../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
-
-const theme=createTheme({
-    palette:{
-        primary:{
-            main: '#008037'
-        },
-        secondary:{
-            main:'#008037'
-        }
-    }
-})
-
-const useStyles=makeStyles({
-    field:{
-        width: 400,
-        border: '#008037'
-    },
-    btn:{
-        color: '#fff',
-        backgroundColor: '#008037',
-        height: 50,
-        width: 400,
-        '&:hover':{
-            backgroundColor: '#09a04b',
-        }
-    },
-    cssLabel: {
-        color : '#008037'
-      }, 
-    cssOutlinedInput: {
-        '&$cssFocused $notchedOutline': {
-          borderColor: '#008037',
-        }
-    },
-    cssFocused: {
-        borderWidth: '1px',
-        borderColor:  '#008037',
-    },
-    root: {
-        "&:hover:not($disabled):not($focused):not($error) $notchedOutline": {
-          borderColor: '#008037',
-        }
-    },
-    input: {
-        color: '#008037'
-    },
-    notchedOutline: {
-        borderWidth: '1px',
-        borderColor:  '#008037',
-        '&:hover':{
-            borderColor: '#008037'
-        }
-    }
-})
 
 export default function Signup() {
 
@@ -87,12 +36,12 @@ export default function Signup() {
         <>
             <ThemeProvider theme={theme}>
                 <StyledMainBody>
-                    <div className="main-intro">
+                    <div className="main">
                         Your <span>personal</span><br></br>
                         video chatting room
                         <p>Sign up now and get <span>connected</span></p>
                     </div>
-                    <div className="signup-form">
+                    <div className="form">
                         <h2>Sign in</h2>
                         {
                             error &&
@@ -164,55 +113,3 @@ export default function Signup() {
         </>
     )
 }
-
-const StyledMainBody=styled.div`
-  display: flex;
-  min-height: 76vh;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5rem 10rem;
-  color: white;
-    .main-intro{
-        width: 50%;
-        font-size: 2.5rem;
-        font-weight: 600;
-        span{
-            color: #CC08FD;
-        }
-        p{
-            font-size: 2rem;
-            font-weight: 400;
-            span{
-                color: #008037;
-            }
-        }
-    }
-    .signup-form{
-        margin: auto;
-        text-align: center;
-        h2{
-            font-size: 2.5rem;
-            font-weight: 500;
-            color: #CC08FD;
-        }
-        .input{
-            width: 100%;
-        }
-        p{
-            font-size: 1.2rem;
-            .link{
-                color: #CC08FD;
-                text-decoration: none;
-                &:hover{
-                    cursor: pointer;
-                }
-            }
-        }
-    }
-`
-const Error=styled.div`
-    color: #d63f3f;
-    width: inherit;
-    font-size: 1.4rem;
-    margin-bottom: 1vh;
-`
