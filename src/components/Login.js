@@ -52,16 +52,19 @@ export default function Login() {
                         }
                         <form onSubmit={handleSignup}>
                         <TextField
+                            placeholder="Enter email here..."
                             autoComplete="off"
                             className={classes.field}
                             fullWidth
                             label="Email"
                             variant="outlined"
                             InputLabelProps={{
+                                shrink: true,
                                 classes: {
                                   root: classes.cssLabel,
                                   focused: classes.cssFocused,
-                                }
+                                },
+                                className: classes.inputProp
                               }}
                               InputProps={{
                                 classes: {
@@ -75,6 +78,7 @@ export default function Login() {
                             inputRef={emailRef}
                         /><br/><br/>
                         <TextField
+                            placeholder="Enter password here..."
                             autoComplete="off"
                             className={classes.field}
                             color="secondary"
@@ -82,10 +86,12 @@ export default function Login() {
                             label="Password"
                             variant="outlined"
                             InputLabelProps={{
+                                shrink: true,
                                 classes: {
                                   root: classes.cssLabel,
                                   focused: classes.cssFocused,
-                                }
+                                },
+                                className: classes.inputProp
                             }}
                             InputProps={{
                                 classes: {

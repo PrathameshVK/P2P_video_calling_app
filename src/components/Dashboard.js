@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyledDashBoard } from '../StyledComponents/StyledDashboard';
 import { theme } from '../StyledComponents/Theme';
 import Button from '@material-ui/core/Button';
@@ -11,14 +11,38 @@ const useStyles=makeStyles({
         width: 200,
         border: '#008037',
         marginLeft: 20
-    }, 
+    },
+    btnJoin:{
+        color: '#008037'
+    },
     btn:{
         color: '#fff',
         backgroundColor: '#008037',
         height: 50,
+        fontSize: 12,
         width: 200,
         '&:hover':{
             backgroundColor: '#09a04b',
+        },
+        ["@media (min-height:320px) and (max-width: 480px)"]: {
+            width: 200,
+            height: 40
+          },
+        ["@media (min-width: 481px) and (max-width: 767px)"]: {
+            width: 200,
+            height: 40
+          },
+        ["@media (min-width: 768px) and (max-width: 1024px)"]: {
+            width: 300,
+            height: 40
+        },
+        ["@media (min-width: 1025px) and (max-width: 1280px)"]:{
+            width: 300,
+            height: 40
+        },
+        ["@media screen and (min-width: 1281px)"]:{
+            width: 200,
+            height: 50
         }
     },
     cssLabel: {
@@ -53,6 +77,9 @@ const useStyles=makeStyles({
 })
 
 export default function Dashboard() {
+
+    const [visible,setVisible] = useState(false);
+
     const classes=useStyles();
     
     return (
@@ -69,7 +96,7 @@ export default function Dashboard() {
                     id="standard-basic"
                     label="Join call"
                     className={classes.field}
-                    variant="outlined"
+                    variant="standard"
                     InputLabelProps={{
                         classes: {
                           root: classes.cssLabel,
@@ -85,6 +112,7 @@ export default function Dashboard() {
                         className: classes.input    
                     }}
                 />
+                <Button className={classes.btnJoin} variant="text">Join</Button>
                 </ThemeProvider>
                 </div>
             </div>

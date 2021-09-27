@@ -51,12 +51,14 @@ export default function Signup() {
                         }
                         <form onSubmit={handleSignup}>
                         <TextField
+                            placeholder="Enter email here..."
                             autoComplete="off"
                             className={classes.field}
                             fullWidth id="outlined-basic"
                             label="Email"
                             variant="outlined"
                             InputLabelProps={{
+                                shrink: true,
                                 classes: {
                                   root: classes.cssLabel,
                                   focused: classes.cssFocused,
@@ -74,6 +76,7 @@ export default function Signup() {
                             inputRef={emailRef}
                         /><br/><br/>
                         <TextField
+                            placeholder="Enter password here..."
                             autoComplete="off"
                             className={classes.field}
                             color="secondary"
@@ -81,6 +84,7 @@ export default function Signup() {
                             label="Password"
                             variant="outlined"
                             InputLabelProps={{
+                                shrink: true,
                                 classes: {
                                   root: classes.cssLabel,
                                   focused: classes.cssFocused,
