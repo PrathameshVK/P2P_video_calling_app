@@ -54,7 +54,7 @@ export default function Signup() {
                             placeholder="Enter email here..."
                             autoComplete="off"
                             className={classes.field}
-                            fullWidth id="outlined-basic"
+                            fullWidth
                             label="Email"
                             variant="outlined"
                             InputLabelProps={{
@@ -80,7 +80,7 @@ export default function Signup() {
                             autoComplete="off"
                             className={classes.field}
                             color="secondary"
-                            fullWidth id="outlined-basic"
+                            fullWidth
                             label="Password"
                             variant="outlined"
                             InputLabelProps={{
