@@ -25,19 +25,19 @@ const useStyles=makeStyles({
             backgroundColor: '#09a04b',
         },
         ["@media (min-height:320px) and (max-width: 480px)"]: {
-            width: 200,
+            width: 190,
             height: 40
           },
         ["@media (min-width: 481px) and (max-width: 767px)"]: {
-            width: 200,
+            width: 160,
             height: 40
           },
         ["@media (min-width: 768px) and (max-width: 1024px)"]: {
-            width: 300,
+            width: 160,
             height: 40
         },
         ["@media (min-width: 1025px) and (max-width: 1280px)"]:{
-            width: 300,
+            width: 200,
             height: 40
         },
         ["@media screen and (min-width: 1281px)"]:{
@@ -65,7 +65,9 @@ const useStyles=makeStyles({
         height: 50,
     },
     input: {
-        color: '#008037'
+        color: '#008037',
+        height: 40,
+        marginBottom: 10
     },
     notchedOutline: {
         borderWidth: '1px',

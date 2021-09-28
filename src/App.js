@@ -7,12 +7,14 @@ import Login from './components/Login';
 import {Switch, Route } from 'react-router-dom';
 import {AuthProvider} from './context/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
+import Hamburger from './components/Hamburger';
 
 function App() {
   return (
     
        <StyledMainApp>
          <AuthProvider>
+          <Hamburger/>
           <Navbar/>
           <Switch>
             <PrivateRoute exact path="/" component={Dashboard}/>
