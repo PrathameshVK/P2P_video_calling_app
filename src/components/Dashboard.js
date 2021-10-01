@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyledDashBoard } from '../StyledComponents/StyledDashboard';
 import { theme } from '../StyledComponents/Theme';
 import Button from '@material-ui/core/Button';
 import { makeStyles, ThemeProvider } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import mainbg from '../img/mainbg.png';
+import { useAuth } from '../context/AuthContext';
 
 const useStyles=makeStyles({  
     field:{
@@ -24,23 +25,23 @@ const useStyles=makeStyles({
         '&:hover':{
             backgroundColor: '#09a04b',
         },
-        ["@media (min-height:320px) and (max-width: 480px)"]: {
+        "@media (min-height:320px) and (max-width: 480px)": {
             width: 190,
             height: 40
           },
-        ["@media (min-width: 481px) and (max-width: 767px)"]: {
+        "@media (min-width: 481px) and (max-width: 767px)": {
             width: 160,
             height: 40
           },
-        ["@media (min-width: 768px) and (max-width: 1024px)"]: {
+        "@media (min-width: 768px) and (max-width: 1024px)": {
             width: 160,
             height: 40
         },
-        ["@media (min-width: 1025px) and (max-width: 1280px)"]:{
+        "@media (min-width: 1025px) and (max-width: 1280px)":{
             width: 200,
             height: 40
         },
-        ["@media screen and (min-width: 1281px)"]:{
+        "@media screen and (min-width: 1281px)":{
             width: 200,
             height: 50
         }
@@ -80,9 +81,34 @@ const useStyles=makeStyles({
 
 export default function Dashboard() {
 
-    const [visible,setVisible] = useState(false);
-
+    const callIdRef=useRef();
+    const [name, setName] = useState("");
+    const [disabled,setDisabled] = useState(true);
     const classes=useStyles();
+    const {currentUser}=useAuth();
+
+    const handleCallId=(e)=>{
+        console.log("callidref : ", callIdRef.current.value);
+        if(callIdRef.current.value.length>0){
+            console.log("checked length");
+            setDisabled(false);
+        }else{
+            setDisabled(true);
+        }
+    }
+
+    {/* useEffect(() => {
+       const docRef = doc(db, "users", currentUser.uid);
+        (async()=>{
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                console.log("Document data:", docSnap.data().username);
+                setName(docSnap.data().username);
+            } else {
+                 console.log("No such document!");
+            }
+        })();
+    },[]);*/}
     
     return (
         <StyledDashBoard>
@@ -113,13 +139,15 @@ export default function Dashboard() {
                         },
                         className: classes.input    
                     }}
+                    inputRef={callIdRef}
+                    onChange={handleCallId}
                 />
-                <Button className={classes.btnJoin} variant="text">Join</Button>
+                <Button disabled={disabled} className={classes.btnJoin} variant="text">Join</Button>
                 </ThemeProvider>
                 </div>
             </div>
             <div>
-                <img src={mainbg} alt="background image"></img>
+                <img src={mainbg} alt="background"></img>
             </div>
         </StyledDashBoard>
     )

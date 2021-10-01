@@ -8,25 +8,36 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { useAuth } from '../context/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
+import { db } from '../firebase';
+import { doc, setDoc} from 'firebase/firestore';
 
 export default function Signup() {
 
+    const [userName, setUserName]=useState("");
+    const usernameRef=useRef();
     const emailRef=useRef();
     const passwordRef=useRef();
     const {signup}=useAuth();
     const [error, setError]=useState('');
     const [loading, setLoading]=useState(false);
     const history=useHistory();
- 
+    const handleChange=()=>{
+        setUserName(usernameRef.current.value);
+    }
     async function handleSignup(e){
         e.preventDefault();
         try {  
             setError('');
             setLoading(true);
-            await signup(emailRef.current.value,passwordRef.current.value);
+            await signup(emailRef.current.value,passwordRef.current.value)
+            .then(currentUser=>{
+                setDoc(doc(db, "users", currentUser.user.uid), {
+                    username: userName
+                  });
+            }) 
             history.push('/');
-        } catch {
-            setError("Could not sign in !");
+        }catch (error) {
+            console.log(error);
         }
         setLoading(false);
     }
@@ -50,6 +61,32 @@ export default function Signup() {
                             </Error>
                         }
                         <form onSubmit={handleSignup}>
+                        <TextField
+                            placeholder="Enter username here..."
+                            autoComplete="off"
+                            className={classes.field}
+                            fullWidth
+                            label="Username"
+                            variant="outlined"
+                            InputLabelProps={{
+                                shrink: true,
+                                classes: {
+                                  root: classes.cssLabel,
+                                  focused: classes.cssFocused,
+                                }
+                              }}
+                              InputProps={{
+                                classes: {
+                                  root: classes.root,
+                                  focused: classes.cssFocused,
+                                  notchedOutline: classes.notchedOutline,
+                                },
+                                className: classes.input
+                            }}
+                            type="text"
+                            inputRef={usernameRef}
+                            onChange={handleChange}
+                        /><br/><br/>
                         <TextField
                             placeholder="Enter email here..."
                             autoComplete="off"

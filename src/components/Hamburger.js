@@ -73,9 +73,13 @@ export default function Hamburger() {
     return (
             <StyledHam>
                 <Menu right styles={styles} width={280}>
-                    <Link to="/about">About us</Link>
-                    <Link to="/contact">Contact us</Link>
-                    <a onClick={handleLogout}>{currentUser && `Log out`}</a>
+                {
+                    currentUser &&
+                        <Link to="/">Home</Link>
+                }
+                    <Link to="/about">About</Link>
+                    <Link to="/contact">Contact</Link>
+                    <Link to="/" onClick={handleLogout}>{currentUser && `Log out`}</Link>
                 </Menu>
             </StyledHam>
     )

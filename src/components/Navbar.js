@@ -3,10 +3,37 @@ import styled from 'styled-components';
 import logo from '../img/logo.png';
 import {Link, useHistory} from 'react-router-dom';
 import {useAuth} from '../context/AuthContext';
+import Button from '@material-ui/core/Button';
+import { makeStyles, ThemeProvider } from '@material-ui/core';
+import { theme } from '../StyledComponents/Theme';
+import {motion} from 'framer-motion';
+import { useLocation } from 'react-router-dom';
+
+
+const useStyles=makeStyles({
+    btn:{
+        color: '#fff',
+        backgroundColor: '#008037',
+        fontSize: 12,
+        width: 90,
+        height: 35,
+        '&:hover':{
+            backgroundColor: '#09a04b',
+        },
+        "@media (min-height:320px) and (max-width: 767px)": {
+            width: 0,
+            height: 0
+          }
+    }
+})
+
+
 
 function Navbar() {
-    const {currentUser, logout}=useAuth();
 
+    const {currentUser, logout}=useAuth();
+    const {pathname}=useLocation();
+    const classes=useStyles();
     const history=useHistory();
 
     async function handleLogout(){
@@ -28,15 +55,45 @@ function Navbar() {
             </div>
             <StyledNavBar>
                 <ul>
+                {
+                    currentUser &&
                     <li>
-                        <Link to="/about">About us</Link>
+                        <Link to="/">Home</Link>
+                        <Line
+                        transition={{duration: 0.30}}
+                        initial={{width: "0%"}}
+                        animate={{width: pathname==="/" ? "40%" : "0%"}}/>
+                    </li>
+                    
+                }
+                    <li>
+                        <Link to="/about">About</Link>
+                        <Line
+                        transition={{duration: 0.30}}
+                        initial={{width: "0%"}}
+                        animate={{width: pathname==="/about" ? "40%" : "0%"}}/>
                     </li>
                     <li>
-                        <Link to="/contact">Contact us</Link>
+                        <Link to="/contact">Contact</Link>
+                        <Line
+                        transition={{duration: 0.30}}
+                        initial={{width: "0%"}}
+                        animate={{width: pathname==="/contact" ? "40%" : "0%"}}/>
                     </li>
+                    {currentUser &&
                     <li>
-                        <a onClick={handleLogout}>{currentUser && `Log out`}</a>
+                        <ThemeProvider theme={theme}>
+                        <Button
+                           className={classes.btn}
+                           onClick={handleLogout}
+                           variant="contained"
+                        >
+                            Log out
+                        </Button>
+                        </ThemeProvider>
+                       {/*<Link to="/" onClick={handleLogout}>Log out</Link>*/}
                     </li>
+                    }
                 </ul>
             </StyledNavBar>
         </StyledHeader>
@@ -131,7 +188,7 @@ const StyledNavBar=styled.div`
 @media (min-width: 1025px) and (max-width: 1280px) {
     font-size: 1.2rem;
     ul{
-        padding-left: 25rem;
+        padding-left: 20rem;
         li{
             padding-left: 2.4rem;
         }
@@ -169,6 +226,15 @@ const StyledNavBar=styled.div`
 @media (max-width: 768px){
     display: none
 }
+`
+
+const Line=styled(motion.div)`
+    height: 0.1rem;
+    background: #008037;
+    width: 0%;
+    position: absolute;
+    bottom: 10%;
+    left: 48%;
 `
 
 export default Navbar;
