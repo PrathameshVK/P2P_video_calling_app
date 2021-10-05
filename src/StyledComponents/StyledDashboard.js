@@ -9,6 +9,9 @@ export const StyledDashBoard = styled.div`
   align-items: center;
   padding: 5rem 10rem;
   overflow: hidden;
+  a{
+    text-decoration: none;
+  }
   .main-intro {
     width: 50%;
     font-size: 2.5rem;

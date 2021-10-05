@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyledDashBoard } from '../StyledComponents/StyledDashboard';
 import about from '../img/about.png'
+
 export default function About() {
 
     return (

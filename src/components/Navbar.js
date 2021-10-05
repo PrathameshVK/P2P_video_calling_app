@@ -1,13 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import logo from '../img/logo.png';
-import {Link, useHistory} from 'react-router-dom';
+import {Link, useHistory, useLocation} from 'react-router-dom';
 import {useAuth} from '../context/AuthContext';
 import Button from '@material-ui/core/Button';
 import { makeStyles, ThemeProvider } from '@material-ui/core';
 import { theme } from '../StyledComponents/Theme';
 import {motion} from 'framer-motion';
-import { useLocation } from 'react-router-dom';
 
 
 const useStyles=makeStyles({
@@ -102,6 +101,7 @@ function Navbar() {
 }
 
 const StyledHeader=styled.div`
+    z-index: 50;
   display: flex;
   width: 100%;
   min-height: 10vh;
@@ -158,6 +158,7 @@ const StyledHeader=styled.div`
 `
 
 const StyledNavBar=styled.div`
+ z-index: 50;
     display: flex;
     min-height: 10vh;
     justify-content: space-between;

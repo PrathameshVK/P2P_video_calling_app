@@ -6,11 +6,79 @@ import { makeStyles, ThemeProvider } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import mainbg from '../img/mainbg.png';
 import { useAuth } from '../context/AuthContext';
+import { Link } from 'react-router-dom';
+
+export default function Dashboard() {
+
+    const idToCall=useRef();
+    const [name, setName] = useState("");
+    const [disabled,setDisabled] = useState(true);
+    const classes=useStyles();
+    const {currentUser}=useAuth();
+
+    const handleCallId=(e)=>{
+        if(idToCall.current.value.length>0){
+            setDisabled(false);
+        }else{
+            setDisabled(true);
+        }
+    }
+
+    {/* useEffect(() => {
+       const docRef = doc(db, "users", currentUser.uid);
+        (async()=>{
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                console.log("Document data:", docSnap.data().username);
+                setName(docSnap.data().username);
+            } else {
+                 console.log("No such document!");
+            }
+        })();
+    },[]);*/}
+    
+    return (
+        <StyledDashBoard>
+           <div className="main-intro">
+                Your <span className="personal">personal</span><br></br>
+                video chatting room
+                <br/><br/>
+                <div className="options">
+                <ThemeProvider theme={theme}>
+                <Link to="/videocall"><Button className={classes.btn} variant="contained">New Call</Button></Link>
+                <TextField
+                autoComplete="off"
+                    id="standard-basic"
+                    label="Join call"
+                    className={classes.field}
+                    variant="standard"
+                    InputLabelProps={{
+                        classes: {
+                          root: classes.cssLabel,
+                        }
+                      }}
+                      InputProps={{
+                        className: classes.input    
+                    }}
+                    inputRef={idToCall}
+                    onChange={handleCallId}
+                />
+                <Button disabled={disabled} className={classes.btnJoin} variant="text">Join</Button>
+                </ThemeProvider>
+                </div>
+            </div>
+            <div>
+                <img src={mainbg} alt="background"></img>
+            </div>
+        </StyledDashBoard>
+    )
+}
+
 
 const useStyles=makeStyles({  
     field:{
         width: 200,
-        border: '#008037',
+        borderColor: '#008037',
         marginLeft: 20
     },
     btnJoin:{
@@ -48,107 +116,10 @@ const useStyles=makeStyles({
     },
     cssLabel: {
         color : '#008037'
-      }, 
-    cssOutlinedInput: {
-        '&$cssFocused $notchedOutline': {
-          borderColor: '#008037',
-        }
-    },
-    cssFocused: {
-        borderWidth: '1px',
-        borderColor:  '#008037',
-    },
-    root: {
-        "&:hover:not($disabled):not($focused):not($error) $notchedOutline": {
-          borderColor: '#008037',
-        },
-        marginTop: 2,
-        height: 50,
-    },
+      },
     input: {
         color: '#008037',
         height: 40,
         marginBottom: 10
-    },
-    notchedOutline: {
-        borderWidth: '1px',
-        borderColor:  '#008037',
-        '&:hover':{
-            borderColor: '#008037'
-        }
     }
 })
-
-export default function Dashboard() {
-
-    const callIdRef=useRef();
-    const [name, setName] = useState("");
-    const [disabled,setDisabled] = useState(true);
-    const classes=useStyles();
-    const {currentUser}=useAuth();
-
-    const handleCallId=(e)=>{
-        console.log("callidref : ", callIdRef.current.value);
-        if(callIdRef.current.value.length>0){
-            console.log("checked length");
-            setDisabled(false);
-        }else{
-            setDisabled(true);
-        }
-    }
-
-    {/* useEffect(() => {
-       const docRef = doc(db, "users", currentUser.uid);
-        (async()=>{
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                console.log("Document data:", docSnap.data().username);
-                setName(docSnap.data().username);
-            } else {
-                 console.log("No such document!");
-            }
-        })();
-    },[]);*/}
-    
-    return (
-        <StyledDashBoard>
-           <div className="main-intro">
-                Your <span className="personal">personal</span><br></br>
-                video chatting room
-                <br/><br/>
-                <div className="options">
-                <ThemeProvider theme={theme}>
-                <Button className={classes.btn} variant="contained">New Call</Button>
-                <TextField
-                autoComplete="off"
-                    id="standard-basic"
-                    label="Join call"
-                    className={classes.field}
-                    variant="standard"
-                    InputLabelProps={{
-                        classes: {
-                          root: classes.cssLabel,
-                          focused: classes.cssFocused,
-                        }
-                      }}
-                      InputProps={{
-                        classes: {
-                          root: classes.root,
-                          focused: classes.cssFocused,
-                          notchedOutline: classes.notchedOutline,
-                        },
-                        className: classes.input    
-                    }}
-                    inputRef={callIdRef}
-                    onChange={handleCallId}
-                />
-                <Button disabled={disabled} className={classes.btnJoin} variant="text">Join</Button>
-                </ThemeProvider>
-                </div>
-            </div>
-            <div>
-                <img src={mainbg} alt="background"></img>
-            </div>
-        </StyledDashBoard>
-    )
-}
